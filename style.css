@@ -1,0 +1,487 @@
+/* =====================================================
+   STYLE.CSS - TiketKu (Website Tiket Bioskop)
+   Daftar isi:
+   1. Warna & pengaturan dasar
+   2. Header & navigasi
+   3. Tombol & input
+   4. Kartu & daftar film
+   5. Halaman pemesanan (tanggal, jam, kursi)
+   6. Ringkasan harga
+   7. Tiket, popup, notifikasi
+   8. Tampilan HP (responsif)
+   ===================================================== */
+
+
+/* ---------- 1. WARNA & PENGATURAN DASAR ---------- */
+
+/* Semua warna disimpan di sini. Mau ganti tema? Cukup ubah di sini saja. */
+:root {
+    --bg: #1c0b12;     /* latar halaman */
+    --card: #2c1520;   /* latar kartu */
+    --line: #4a2a38;   /* warna garis / border */
+    --ac: #ffb627;     /* warna aksen (kuning) */
+    --tx: #f6e9ee;     /* warna teks utama */
+    --mut: #b99aa7;    /* warna teks redup */
+    --err: #ff7a8a;    /* warna pesan error */
+    --ok: #5fd1a0;     /* warna status berhasil */
+  }
+  
+  /* Ukuran elemen sudah termasuk padding & border, supaya tidak melebar */
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--tx);
+    font-family: system-ui, "Segoe UI", Arial, sans-serif;
+    line-height: 1.5;
+  }
+  
+  h1, h2, h3 {
+    font-family: Georgia, serif;
+    margin: 0.8em 0 0.4em;
+  }
+  
+  h1 {
+    margin: 0;
+    font-size: 1.6rem;
+  }
+  
+  /* Tulisan "Ku" di logo dibuat kuning dan miring */
+  h1 span {
+    color: var(--ac);
+    font-style: italic;
+  }
+  
+  /* Kotak utama yang menampung semua halaman */
+  main {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Kelas pembantu */
+  .mut {
+    color: var(--mut);
+  }
+  
+  .err {
+    color: var(--err);
+    display: block;
+    min-height: 1em;   /* supaya tinggi tidak loncat saat error muncul */
+  }
+  
+  /* Elemen dengan atribut hidden pasti disembunyikan */
+  [hidden] {
+    display: none !important;
+  }
+  
+  
+  /* ---------- 2. HEADER & NAVIGASI ---------- */
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px 20px;
+    border-bottom: 2px dashed var(--line);
+  }
+  
+  /* Tombol menu "Film" dan "Pesanan Saya" */
+  .nav {
+    background: none;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    color: var(--mut);
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  /* Menu yang sedang aktif */
+  .nav.on {
+    color: var(--ac);
+    border-color: var(--ac);
+  }
+  
+  
+  /* ---------- 3. TOMBOL & INPUT ---------- */
+  
+  button, input, select {
+    font: inherit;   /* ikut font halaman */
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 9px 11px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--tx);
+  }
+  
+  /* Garis kuning saat elemen dipilih lewat keyboard (Tab) */
+  :focus-visible {
+    outline: 2px solid var(--ac);
+    outline-offset: 2px;
+  }
+  
+  /* Tombol utama (kuning penuh) */
+  .btn {
+    background: var(--ac);
+    color: #2a1500;
+    border: 0;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  /* Tombol sekunder (hanya garis tepi) */
+  .btn.out {
+    background: none;
+    color: var(--ac);
+    border: 1px solid var(--ac);
+  }
+  
+  /* Tombol yang tampil seperti link */
+  .link {
+    background: none;
+    border: 0;
+    padding: 0;
+    color: var(--ac);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  /* Baris pencarian + filter genre */
+  .bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  
+  .bar select {
+    max-width: 200px;
+  }
+  
+  
+  /* ---------- 4. KARTU & DAFTAR FILM ---------- */
+  
+  /* Kotak dasar yang dipakai di banyak tempat */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  
+  /* Susunan kartu film: otomatis menyesuaikan lebar layar */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 14px;
+  }
+  
+  .mv h3 {
+    margin: 0.4em 0 0;
+  }
+  
+  .mv .btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  /* Kotak "poster" berisi emoji */
+  .poster {
+    height: 120px;
+    display: grid;
+    place-items: center;
+    font-size: 3.2rem;
+    background: linear-gradient(160deg, #5a1830, #1c0b12);
+    border-radius: 8px;
+  }
+  
+  /* Label kecil: rating film / status pesanan */
+  .badge {
+    display: inline-block;
+    border: 1px solid var(--ac);
+    color: var(--ac);
+    border-radius: 20px;
+    padding: 0 10px;
+    font-size: 0.8rem;
+  }
+  
+  .badge.ok {
+    color: var(--ok);
+    border-color: var(--ok);
+  }
+  
+  .badge.no {
+    color: var(--err);
+    border-color: var(--err);
+  }
+  
+  
+  /* ---------- 5. HALAMAN PEMESANAN ---------- */
+  
+  /* Dua kolom: kiri = pilih jadwal & kursi, kanan = ringkasan */
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 330px;
+    gap: 20px;
+    align-items: start;
+  }
+  
+  /* Tombol pilihan tanggal & jam */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .chip {
+    background: var(--card);
+    color: var(--tx);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  .chip.on {
+    background: var(--ac);
+    color: #2a1500;
+    border-color: var(--ac);
+  }
+  
+  /* Jam yang sudah lewat */
+  .chip:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  
+  /* Garis lengkung "LAYAR" di atas kursi */
+  .screen {
+    text-align: center;
+    color: var(--mut);
+    letter-spacing: 0.3em;
+    font-size: 0.8rem;
+    border-top: 4px solid var(--ac);
+    border-radius: 50% 50% 0 0 / 14px 14px 0 0;
+    padding-top: 4px;
+    margin: 10px 0 14px;
+  }
+  
+  /* Satu baris kursi (A, B, C, ...) */
+  .srow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  
+  /* Huruf baris di sebelah kiri */
+  .srow b {
+    width: 18px;
+    color: var(--mut);
+  }
+  
+  /* Satu kursi */
+  .s {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: 8px 8px 3px 3px;
+    border: 1px solid var(--line);
+    background: #3a2030;
+    color: var(--tx);
+    cursor: pointer;
+  }
+  
+  /* Kursi premium: garis tepi kuning */
+  .s.prem {
+    border-color: var(--ac);
+  }
+  
+  /* Kursi yang sedang dipilih */
+  .s.sel {
+    background: var(--ac);
+    color: #2a1500;
+    border-color: var(--ac);
+  }
+  
+  /* Kursi yang sudah terisi (tidak bisa diklik) */
+  .s.booked {
+    background: #150a0f;
+    color: #6c4a58;
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  /* Keterangan warna kursi di bawah denah */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 14px;
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: var(--mut);
+  }
+  
+  /* Kotak kecil contoh kursi di keterangan */
+  .legend .s {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+  
+  
+  /* ---------- 6. RINGKASAN HARGA ---------- */
+  
+  /* Baris "label ........ nilai" */
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 6px 0;
+  }
+  
+  /* Baris total dibuat lebih besar dan diberi garis atas */
+  .tot {
+    font-size: 1.2rem;
+    border-top: 1px dashed var(--line);
+    padding-top: 8px;
+  }
+  
+  /* Kolom kode promo + tombol "Pakai" */
+  .promo {
+    display: flex;
+    gap: 8px;
+    margin: 8px 0 2px;
+  }
+  
+  .promo .btn {
+    padding: 8px 12px;
+  }
+  
+  /* Hitung mundur penahanan kursi */
+  .timer {
+    background: #150a0f;
+    color: var(--ac);
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+    font-variant-numeric: tabular-nums;   /* angka lebar sama, tidak bergeser */
+  }
+  
+  /* Form data pemesan */
+  label {
+    display: block;
+    margin-top: 8px;
+  }
+  
+  label input {
+    margin-top: 4px;
+  }
+  
+  #pay {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  
+  /* ---------- 7. TIKET, POPUP, NOTIFIKASI ---------- */
+  
+  /* Kartu tiket dengan garis putus-putus */
+  .stub {
+    max-width: 460px;
+    margin: 0 auto 16px;
+    border-style: dashed;
+  }
+  
+  /* Kode booking */
+  .stub .code {
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+    color: var(--ac);
+  }
+  
+  /* Popup konfirmasi: menutupi seluruh layar dengan latar gelap */
+  #modal {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.67);
+    z-index: 5;
+  }
+  
+  #modal .card {
+    width: 100%;
+    max-width: 420px;
+  }
+  
+  /* Notifikasi kecil di bawah layar (muncul saat ada kelas "show") */
+  #toast {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translate(-50%, 30px);   /* posisi awal: agak turun */
+    max-width: 90%;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: var(--ac);
+    color: #2a1500;
+    opacity: 0;                          /* awalnya tidak terlihat */
+    pointer-events: none;
+    transition: 0.25s;
+    z-index: 6;
+  }
+  
+  #toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  
+  
+  /* ---------- 8. TAMPILAN HP (RESPONSIF) ---------- */
+  
+  /* Layar lebar maksimal 820px (HP / tablet kecil) */
+  @media (max-width: 820px) {
+    /* Dua kolom jadi satu kolom (ringkasan pindah ke bawah) */
+    .cols {
+      grid-template-columns: 1fr;
+    }
+  
+    /* Kursi sedikit diperkecil supaya muat */
+    .s {
+      width: 30px;
+      height: 30px;
+    }
+  
+    .bar {
+      flex-wrap: wrap;
+    }
+  
+    .bar select {
+      max-width: none;
+    }
+  }
+  
+  /* Matikan animasi bagi pengguna yang memilih "kurangi gerakan" */
+  @media (prefers-reduced-motion: reduce) {
+    #toast {
+      transition: none;
+    }
+  }

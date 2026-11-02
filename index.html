@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TiketKu - Pesan Tiket Bioskop</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Tiket<span>Ku</span></h1>
+  <nav>
+    <button class="nav on" data-v="movies">Film</button>
+    <button class="nav" data-v="orders">Pesanan Saya</button>
+  </nav>
+</header>
+
+<main>
+  <section id="v-movies">
+    <div class="bar">
+      <input id="q" placeholder="Cari judul film">
+      <select id="g"><option value="">Semua genre</option></select>
+    </div>
+    <div id="movies" class="grid"></div>
+  </section>
+
+  <section id="v-booking" hidden>
+    <button id="back" class="link">Kembali ke daftar film</button>
+    <h2 id="bTitle"></h2>
+    <p id="bMeta" class="mut"></p>
+    <div class="cols">
+      <div>
+        <h3>Tanggal</h3><div id="dates" class="chips"></div>
+        <small class="mut">Tanda * = harga akhir pekan</small>
+        <h3>Jam tayang</h3><div id="times" class="chips"></div>
+        <h3>Kursi</h3>
+        <div class="screen">LAYAR</div>
+        <div id="seats"></div>
+        <div class="legend"><i class="s"></i>Tersedia <i class="s sel"></i>Dipilih <i class="s booked"></i>Terisi <i class="s prem"></i>Premium (baris G-H, +Rp15.000)</div>
+      </div>
+      <aside class="card">
+        <h3>Ringkasan</h3>
+        <div id="timer" class="timer" hidden></div>
+        <p id="sSeats" class="mut">Belum ada kursi dipilih</p>
+        <div class="row"><span>Subtotal</span><b id="sSub">Rp0</b></div>
+        <div class="promo"><input id="promo" placeholder="Kode promo"><button id="applyPromo" class="btn out">Pakai</button></div>
+        <small id="pMsg" class="mut"></small>
+        <div class="row"><span>Diskon</span><b id="sDisc">Rp0</b></div>
+        <div class="row tot"><span>Total</span><b id="sTot">Rp0</b></div>
+        <h3>Data pemesan</h3>
+        <label>Nama<input id="name"><small class="err" id="eName"></small></label>
+        <label>Email<input id="email"><small class="err" id="eEmail"></small></label>
+        <label>No. HP<input id="phone"><small class="err" id="ePhone"></small></label>
+        <button id="pay" class="btn">Bayar sekarang</button>
+        <small class="err" id="eSeat"></small>
+      </aside>
+    </div>
+  </section>
+
+  <section id="v-ticket" hidden>
+    <div id="ticket" class="card stub"></div>
+    <button id="toMovies" class="btn">Kembali ke daftar film</button>
+  </section>
+
+  <section id="v-orders" hidden>
+    <h2>Pesanan Saya</h2>
+    <div class="bar">
+      <input id="oq" placeholder="Cari kode booking">
+      <button id="resetData" class="btn out">Reset data demo</button>
+    </div>
+    <div id="olist"></div>
+  </section>
+</main>
+
+<div id="modal" hidden>
+  <div class="card">
+    <h3 id="mT"></h3><p id="mX"></p>
+    <div class="row"><button id="mNo" class="btn out">Batal</button><button id="mOk" class="btn">Lanjutkan</button></div>
+  </div>
+</div>
+<div id="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>
